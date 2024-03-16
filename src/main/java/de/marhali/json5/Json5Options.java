@@ -61,12 +61,21 @@ public class Json5Options {
      */
     private final int indentFactor;
 
-    public Json5Options(boolean allowInvalidSurrogates, boolean quoteSingle, boolean trailingComma, int indentFactor) {
+    //<editor-fold desc="Modified by Ultreon (added quoteless parameter)">
+    /**
+     * Whether keys of {@link Json5Object} should be without quotes.
+     * This is unless starting or ending with a digit.
+     */
+    private final boolean quoteless;
+
+    public Json5Options(boolean allowInvalidSurrogates, boolean quoteSingle, boolean trailingComma, int indentFactor, boolean quoteless) {
         this.allowInvalidSurrogates = allowInvalidSurrogates;
         this.quoteSingle = quoteSingle;
         this.trailingComma = trailingComma;
         this.indentFactor = Math.max(0, indentFactor);
+        this.quoteless = quoteless;
     }
+    //</editor-fold>
 
     public boolean isAllowInvalidSurrogates() {
         return allowInvalidSurrogates;
@@ -83,4 +92,10 @@ public class Json5Options {
     public int getIndentFactor() {
         return indentFactor;
     }
+
+    //<editor-fold desc="Modified by Ultreon (added quoteless getter)">
+    public boolean isQuoteless() {
+        return quoteless;
+    }
+    //</editor-fold>
 }

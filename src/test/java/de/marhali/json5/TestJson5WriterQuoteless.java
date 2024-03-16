@@ -17,25 +17,24 @@
 package de.marhali.json5;
 
 import de.marhali.json5.stream.Json5Writer;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.StringWriter;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Unit tests for the {@link Json5Writer}.
  *
  * @author Marcel Haßlinger
  */
-public class TestJson5Writer {
+public class TestJson5WriterQuoteless {
 
     //<editor-fold desc="Modified by Ultreon (added support for quoteless)">
     private final Json5Options options
-            = new Json5Options(true, true, false, 0, false);
+            = new Json5Options(true, true, false, 0, true);
     //</editor-fold>
 
     private StringWriter stringWriter;
@@ -70,7 +69,9 @@ public class TestJson5Writer {
 
         json5Writer.write(array);
 
+        //<editor-fold desc="Modified by Ultreon (added support for quoteless)">
         assertEquals("[true,123,0x100,'Lorem ipsum',null,{}]", stringWriter.toString());
+        //</editor-fold>
     }
 
     @Test
@@ -85,10 +86,12 @@ public class TestJson5Writer {
 
         json5Writer.write(object);
 
-        assertEquals("{'bool':false,'num':123,'hex':0x100,'str':'Lorem ipsum','nulled':null,'array':[]}",
+        assertEquals("{bool:false,num:123,hex:0x100,str:'Lorem ipsum',nulled:null,array:[]}",
                 stringWriter.toString());
     }
 
+
+    //<editor-fold desc="Modified by Ultreon (added support for quoteless and comments)">
     @Test
     void objectWithComments() throws IOException {
         Json5Object object = new Json5Object();
@@ -102,9 +105,10 @@ public class TestJson5Writer {
 
         json5Writer.write(object);
 
-        assertEquals("{'bool':false,'num':123,'hex':0x100,'str':'Lorem ipsum',/* Null on purpose */'nulled':null,'array':[]}",
+        assertEquals("{bool:false,num:123,hex:0x100,str:'Lorem ipsum',/* Null on purpose */nulled:null,array:[]}",
                 stringWriter.toString());
     }
+    //</editor-fold>
 
     @Test
     void nullLiteral() throws IOException {

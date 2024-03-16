@@ -4,8 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.marhali</groupId>
-    <artifactId>json5-java</artifactId>
+    <!--<editor-fold desc="Modified by Ultreon (changed groupId and artifactId for distribution using Jitpack)">-->
+    <groupId>com.github.Ultreon</groupId>
+    <artifactId>json5-api</artifactId>
+    <!--</editor-fold>-->
     <version>2.0.0</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>A lightweight library to parse and serialize JSON5 data</description>
@@ -33,8 +35,10 @@
     </scm>
 
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <!--<editor-fold desc="Modified by Ultreon (changed source and target JVM version to 17)">-->
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <!--</editor-fold>-->
     </properties>
 
     <distributionManagement>

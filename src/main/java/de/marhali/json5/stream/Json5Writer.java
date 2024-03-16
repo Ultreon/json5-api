@@ -3,6 +3,7 @@
  *
  * Copyright (C) 2021 SyntaxError404
  * Copyright (C) 2022 Marcel Haßlinger
+ * Copyright (C) 2024 Ultreon Team
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +30,7 @@ import de.marhali.json5.*;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -138,7 +140,25 @@ public final class Json5Writer {
                 writer.append('\n').append(childIndent);
             }
 
-            writer.append(quote(entry.getKey())).append(":");
+            //<editor-fold desc="Modified by Ultreon (added support for comments)">
+            String comment = object.getComment(entry.getKey());
+            if (comment != null && options.getIndentFactor() > 0) {
+                List<String> lines = comment.lines().toList();
+                for (String line : lines) {
+                    writer.append("// ").append(line).append('\n').append(childIndent);
+                }
+            } else if (comment != null) {
+                writer.append("/* ").append(comment).append(" */");
+            }
+            //</editor-fold>
+
+            //<editor-fold desc="Modified by Ultreon (added support for quoteless)">
+            if (options.isQuoteless() && entry.getKey().matches("^[a-zA-Z_][a-zA-Z0-9_]*[a-zA-Z_]$")) {
+                writer.append(entry.getKey()).append(":");
+            } else {
+                writer.append(quote(entry.getKey())).append(":");
+            }
+            //</editor-fold>
 
             if(options.getIndentFactor() > 0) {
                 writer.append(' ');

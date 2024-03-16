@@ -33,6 +33,10 @@ import java.util.Set;
 public final class Json5Object extends Json5Element {
     private final LinkedTreeMap<String, Json5Element> members =
             new LinkedTreeMap<String, Json5Element>();
+    //<editor-fold desc="Modified by Ultreon (added support for comments)">
+    private LinkedTreeMap<String, String> comments =
+            new LinkedTreeMap<>();
+    //</editor-fold>
 
     /**
      * Creates a deep copy of this element and all its children
@@ -111,6 +115,28 @@ public final class Json5Object extends Json5Element {
     public void addProperty(String property, Character value) {
         add(property, value == null ? Json5Null.INSTANCE : new Json5String(value.toString()));
     }
+
+    //<editor-fold desc="Modified by Ultreon (added support for comments)">
+    /**
+     * Sets the comment for a member.
+     *
+     * @param property name of the member
+     * @param comment comment for the member
+     */
+    public void setComment(String property, String comment) {
+        comments.put(property, comment);
+    }
+
+    /**
+     * Gets the comment for a member.
+     *
+     * @param property name of the member
+     * @return comment for the member
+     */
+    public String getComment(String property) {
+        return comments.get(property);
+    }
+    //</editor-fold>
 
     /**
      * Returns a set of members of this object. The set is ordered, and the order is in which the
